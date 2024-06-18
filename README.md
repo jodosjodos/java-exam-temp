@@ -1,5 +1,5 @@
 [SPRING SECURIT](https://github.com/jodosjodos/spring-security/blob/main/README.md)
-A simple spring boot   with spring security  that  interpret authentication and authorization with jwt  and send emai.
+A simple spring boot   with spring security  that  interpret authentication and authorization with jwt  and relationships
 [TESTING](https://github.com/jodosjodos/spring-security/blob/main/README.md)
  
 1 ** Get the project on pc : **

@@ -1,0 +1,20 @@
+# Maven
+target/
+mvnw
+mvnw.cmd
+*.iml
+
+# Gradle
+.gradle/
+build/
+
+# IDE
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# OS-specific
+.DS_Store
+Thumbs.db

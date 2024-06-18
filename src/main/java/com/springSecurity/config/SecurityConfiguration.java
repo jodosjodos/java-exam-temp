@@ -27,31 +27,35 @@ public class SecurityConfiguration {
 
     private final JWtAuthenticationFilter jWtAuthenticationFilter;
     private final UserServiceSecurityImpl userServiceSecurity;
-    private  final FilterExceptionHandling exceptionHandler;
+    private final FilterExceptionHandling exceptionHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(request ->
-                request
-                        .requestMatchers(
-                                "/v2/api-docs",
-                                "/v3/api-docs",
-                                "/v3/api-docs/**",
-                                "/swagger-resources",
-                                "/swagger-resources/**",
-                                "/configuration/ui",
-                                "/configuration/security",
-                                "/swagger-ui/**",
-                                "/webjars/**",
-                                "/swagger-ui.html",
-                                "/api/v1/auth/**").
-                        permitAll()
-                        .anyRequest().authenticated()
+                        request
+                                .requestMatchers(
+                                        "/v2/api-docs",
+                                        "/v3/api-docs",
+                                        "/v3/api-docs/**",
+                                        "/swagger-resources",
+                                        "/swagger-resources/**",
+                                        "/configuration/ui",
+                                        "/configuration/security",
+                                        "/swagger-ui/**",
+                                        "/webjars/**",
+                                        "/swagger-ui.html",
+                                        "/api/v1/auth/**",
+                                        "/actuator/**",
+                                        "/api/v1/auth/**"
+                                ).
+                                permitAll()
+                                .anyRequest().authenticated()
 
 
-        ).sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        ).authenticationProvider(authenticationProvider()).addFilterBefore(jWtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling((exception)->exception.authenticationEntryPoint(exceptionHandler));
+                ).sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                ).authenticationProvider(authenticationProvider()).addFilterBefore(jWtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling((exception) -> exception.authenticationEntryPoint(exceptionHandler));
         return http.build();
     }
 

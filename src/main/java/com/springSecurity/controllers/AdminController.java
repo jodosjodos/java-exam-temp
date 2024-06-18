@@ -7,9 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,13 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
     private final AdminService adminService;
-    @GetMapping
-    public ResponseEntity<String> getAdmin(String heder){
-
-
-        return  ResponseEntity.ok().body("hai Admin");
-
-    }
     //     get all user
     @Operation(
             summary = "get all users by admin token",
@@ -58,5 +49,11 @@ public class AdminController {
     @GetMapping("/users")
     public ResponseEntity<List<UserData>> getAllUsers() {
         return ResponseEntity.ok().body(adminService.getAllUsers());
+    }
+    @DeleteMapping("/users/{userEmail}")
+    @SecurityRequirement(name = "bearerAuth")
+    public ResponseEntity<?> deleteUserById(@PathVariable String userEmail) {
+        adminService.deleteUserById(userEmail);
+        return ResponseEntity.noContent().build();
     }
 }

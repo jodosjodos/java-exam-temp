@@ -35,4 +35,23 @@ public class AdminServiceImpl implements AdminService {
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public void deleteUserById(String userEmail) {
+        try {
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            UserData user = (UserData) securityContext.getAuthentication().getPrincipal();
+//            //TODO:logical solution
+            if (!user.getRole().toString().equals("ADMIN")) {
+                // Check if the user's role is not "ADMIN"
+                throw new ApiRequestException("Unauthorized role. You must be an ADMIN to access " +
+                        "this endpoint",
+                        HttpStatus.UNAUTHORIZED);
+            }
+            userRepository.deleteByEmail(userEmail);
+        } catch (Exception ex) {
+            throw new ApiRequestException(ex.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
